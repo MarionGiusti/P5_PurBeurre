@@ -1,0 +1,5 @@
+# Ignore virtual env
+P5_PurBeurre\
+
+#Ignore file .env
+.env
