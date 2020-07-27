@@ -24,18 +24,26 @@ and will share the same category fields.
 ### Getting Started:
 
 The program is composed of 5 files:
+
 	* PB_appli.py: main script
+	
 	* PB_constants.py: module which regroups constants of the program
+	
 	* Class_database.py & Class_interface.py: one module for each class of the program
+	
 	* table_queries.sql: script with sql queries to create tables in the database
+	
 	
 ##### Prerequisites:
 Python must be installed:
-	- Virtualenv Module too, otherwise : pip install virtualenv
+
+	* Virtualenv Module too, otherwise : pip install virtualenv
 	
 MySQL must be installed, otherwise:
-	- Installation : http://dev.mysql.com/downloads/mysql/#downloads
-	- Configuration : "host", "user", "passwd"
+
+	* Installation : http://dev.mysql.com/downloads/mysql/#downloads
+	
+	* Configuration : "host", "user", "passwd"
 
 ##### Installation:
 
@@ -73,8 +81,8 @@ MySQL must be installed, otherwise:
 
 The program counts 2 classes: Database and InterfaceManager
 
-##### Database Class:
-**Methods to set up the Pur Beurre database (create / update):**
+#### Database Class:
+##### Methods to set up the Pur Beurre database (create / update):
 
 	* Create its own database (*create_database(), create_table() methods*)
 	
@@ -85,7 +93,7 @@ The program counts 2 classes: Database and InterfaceManager
 	* Save them in its database or update them (*insert_cat(), insert_product() methods*)
 
 
-**Methods to interact with the Pur Beurre database using SQL queries.** 
+##### Methods to interact with the Pur Beurre database using SQL queries. 
 
 SQL queries are executed in order to:
 	
@@ -99,7 +107,7 @@ SQL queries are executed in order to:
 Object of the Database class is an attribute of the InterfaceManager class. In this way, methods to interact with the database can be directly execute in methods from 
 the InterfaceManager class.
 
-##### InterfaceManager Class:
+#### InterfaceManager Class:
 Regroups all methods which allow the user to interact with the PurBeurre interface. 
 For wrong user inputs, the program repeats the questions.
 
@@ -119,7 +127,7 @@ The program interacts with the user by proposing different options (*display_men
 	3- Quit PUR BEURRE
 	
 	
-**When the user selects the option 1:**
+##### When the user selects the option 1:
 
 	* The program displays random categories from the Pur Beurre database (*using method random_cat() from InterfaceManager class*)
 	
@@ -143,7 +151,9 @@ The program interacts with the user by proposing different options (*display_men
 	
 	* Then, the program displays the 4 different options (*display_all_options() from InterfaceManager class*)
 	
-	
-**When the user selects the option 2:**
+
+##### When the user selects the option 2:
+
 	* The program displays the list of the product/substitute saved by the user (*display_fav() from InterfaceManager class*)
+	
 	* Then the program displays the different options (*display_options() from InterfaceManager class*)
