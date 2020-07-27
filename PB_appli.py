@@ -10,7 +10,7 @@ This application
 Script Python
 Files:
 PB_appli.py (main script),
-Class_database.py, Class_interface.py and DB_constants (modules),
+Class_database.py, Class_interface.py and PB_constants (modules),
 table_queries (sql queries to create tables in the database)
 
 """
