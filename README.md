@@ -75,7 +75,7 @@ MySQL must be installed, otherwise:
 			
 		Do not update the Pur Beurre database:
 			> PB_appli.py
-
+			
 
 ### Features:
 
@@ -84,24 +84,24 @@ The program counts 2 classes: Database and InterfaceManager
 #### Database Class:
 ##### Methods to set up the Pur Beurre database (create / update):
 
-	* Create its own database (*create_database(), create_table() methods*)
+	* Create its own database (create_database(), create_table() methods)
 	
-	* Search requests in the OpenFoodFacts API and import data from the OpenFoodFacts API (*call_api() method*). 
+	* Search requests in the OpenFoodFacts API and import data from the OpenFoodFacts API (call_api() method). 
 	In the PB_constants.py file, the CATEGORIES and CHOSEN_FIELDS lists can be changed. CHOSEN_FIELDS list select some useful fields for each product requested.
 	For more informations about the API requests: https://documenter.getpostman.com/view/8470508/SVtN3Wzy?version=latest#4a0c27c3-3abc-42c4-bf97-63f4e4108294
 	
-	* Save them in its database or update them (*insert_cat(), insert_product() methods*)
+	* Save them in its database or update them (insert_cat(), insert_product() methods)
 
 
 ##### Methods to interact with the Pur Beurre database using SQL queries. 
 
 SQL queries are executed in order to:
 	
-	* Get informations about categories, products, substitutes (*get_prod_from_cat(cat_id), get_chosen_prod(id_prod_to_comp), get_fav()*)
+	* Get informations about categories, products, substitutes (get_prod_from_cat(cat_id), get_chosen_prod(id_prod_to_comp), get_fav())
 	
-	* Compare them (*find_substitute()*)
+	* Compare them (find_substitute())
 	
-	* Save them (*save_fav(id_prod_to_comp, id_prod_to_save)*)
+	* Save them (save_fav(id_prod_to_comp, id_prod_to_save))
 
 
 Object of the Database class is an attribute of the InterfaceManager class. In this way, methods to interact with the database can be directly execute in methods from 
@@ -116,7 +116,7 @@ Description of these main methods are in the followed section Usage.
 
 ### Usage:
 
-The program interacts with the user by proposing different options (*display_menu(), display_all_options(), display_options() methods from InterfaceManager class*): 
+The program interacts with the user by proposing different options (display_menu(), display_all_options(), display_options() methods from InterfaceManager class): 
 	
 	0- Main menu
 	
@@ -129,31 +129,31 @@ The program interacts with the user by proposing different options (*display_men
 	
 ##### When the user selects the option 1:
 
-	* The program displays random categories from the Pur Beurre database (*using method random_cat() from InterfaceManager class*)
+	* The program displays random categories from the Pur Beurre database (using method random_cat() from InterfaceManager class)
 	
-	* The user chooses one of those categories by entering the corresponding number (_variable enter_1_)
+	* The user chooses one of those categories by entering the corresponding number (variable enter_1)
 	
-	* The program checks that the user input is correct (*using method verif_input1() from InterfaceManager class*)
+	* The program checks that the user input is correct (using method verif_input1() from InterfaceManager class)
 	
-	* The program displays random products from the selected category (*using method random_prod(enter_1) from InterfaceManager class*)
+	* The program displays random products from the selected category (using method random_prod(enter_1) from InterfaceManager class)
 	
-	* The user chooses one of those products by entering the corresponding number (*variable enter_2*)
+	* The user chooses one of those products by entering the corresponding number (variable enter_2)
 	
-	* The program checks that the user input is correct (*using method verif_input2() from InterfaceManager class*)
+	* The program checks that the user input is correct (using method verif_input2() from InterfaceManager class)
 	
-	* The program searchs substitutes to the selected product (*find_substitute() from Database class*)
+	* The program searchs substitutes to the selected product (find_substitute() from Database class)
 	
-	* If substitutes are found, the program displays them (*display_substitute() from InterfaceManager class*) with some descriptions (i.e. its brand, nova-group, nutrition-grade, store where you can buy it ...)
+	* If substitutes are found, the program displays them (display_substitute() from InterfaceManager class) with some descriptions (i.e. its brand, nova-group, nutrition-grade, store where you can buy it ...)
 	
 	* The user can choose to save one of the substitute by entering the corresponding number
 	
-	* Depending on the user input, the program save the selected product and its substitute in the table 'Favorite_product' of the Pur Beurre database (*save_substitute() from InterfaceManager class*)
+	* Depending on the user input, the program save the selected product and its substitute in the table 'Favorite_product' of the Pur Beurre database (save_substitute() from InterfaceManager class)
 	
-	* Then, the program displays the 4 different options (*display_all_options() from InterfaceManager class*)
+	* Then, the program displays the 4 different options (display_all_options() from InterfaceManager class)
 	
 
 ##### When the user selects the option 2:
 
-	* The program displays the list of the product/substitute saved by the user (*display_fav() from InterfaceManager class*)
+	* The program displays the list of the product/substitute saved by the user (display_fav() from InterfaceManager class)
 	
-	* Then the program displays the different options (*display_options() from InterfaceManager class*)
+	* Then the program displays the different options (display_options() from InterfaceManager class)
