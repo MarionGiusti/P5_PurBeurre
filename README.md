@@ -131,7 +131,7 @@ The program interacts with the user by proposing different options (*display_men
 
 	* The program displays random categories from the Pur Beurre database (*using method random_cat() from InterfaceManager class*)
 	
-	* The user chooses one of those categories by entering the corresponding number (*variable enter_1*)
+	* The user chooses one of those categories by entering the corresponding number (_variable enter_1_)
 	
 	* The program checks that the user input is correct (*using method verif_input1() from InterfaceManager class*)
 	
