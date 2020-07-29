@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: Utf-8 -*
-
 """
 
 PurBeurre application: Eat better !
@@ -15,7 +12,8 @@ table_queries (sql queries to create tables in the database)
 
 """
 import argparse
-from class_interface import *
+from pb_database import Database
+from pb_interface import InterfaceManager
 
 
 def main():

@@ -9,7 +9,6 @@ Class Database:
 
 import mysql.connector
 import requests
-# import json
 
 from pb_constants import CONFIG, CATEGORIES, CHOSEN_FIELDS
 
@@ -63,9 +62,9 @@ class Database:
                     "json": True
                     }
 
-                r = requests.get(search_url, params=payload, headers=headers)
+                req = requests.get(search_url, params=payload, headers=headers)
 
-                results_json = r.json()
+                results_json = req.json()
                 products_json = results_json["products"]
 
                 for product in products_json:
@@ -220,11 +219,6 @@ class Database:
         except mysql.connector.Error as err:
             print(err)
             self.cnx.rollback()
-        #except mysql.connector.errors.IntegrityError as err:
-        #    print(err)
-        #     print()
-        #     print(" Ce couple produit / substitut est déjà enregistré dans vos favoris")
-        #    self.cnx.rollback()
 
     def get_fav(self):
         """ Get some attributes from the product and substitute

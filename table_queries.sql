@@ -24,9 +24,11 @@ CREATE TABLE IF NOT EXISTS Product (
     ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS Favorite_product (
+    id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
     prod_id SMALLINT UNSIGNED NOT NULL,
     substitute_id SMALLINT UNSIGNED NOT NULL,
-    PRIMARY KEY(prod_id, substitute_id),
+    PRIMARY KEY(id),
+    CONSTRAINT uq_prod_sub UNIQUE(prod_id, substitute_id),
     CONSTRAINT fk_favprod_prod FOREIGN KEY(prod_id)
     REFERENCES Product(id)
     ON UPDATE CASCADE,

@@ -25,11 +25,11 @@ and will share the same category fields.
 
 The program is composed of 5 files:
 
-	* PB_appli.py: main script
+	* pb_app.py: main script
 	
-	* PB_constants.py: module which regroups constants of the program
+	* pb_constants.py: module which regroups constants of the program
 	
-	* Class_database.py & Class_interface.py: one module for each class of the program
+	* pb_database.py & pb_interface.py: one module for each class of the program
 	
 	* table_queries.sql: script with sql queries to create tables in the database
 	
@@ -49,18 +49,18 @@ MySQL must be installed, otherwise:
 
 	1- Clone this repository: git clone https://github.com/MarionGiusti/P5_PurBeurre.git
 	
-	2- Create a virtualenv: virtualenv -p python3 P5_PurBeurre
+	2- Create a virtualenv: virtualenv -p python3 pb_env
 	
 	3- Activate the virtualenv:
-		Linux & MacOS user: source P5_PurBeurre\bin\activate
-		Windows user: P5_PurBeurre\Scripts\activate
+		Linux & MacOS user: source pb_env\bin\activate
+		Windows user: pb_env\Scripts\activate
 	
 	4- Install the required libraries list in the requirements.txt file: pip install -r requirements.txt
 		
 	5- To allow the program to connect to your SQL Server:
 		- Create a .env file and write in it your password in the constant DB_PWD: DB_PWD=yourchosenpasswd
 		- if your SQL user is not root: 
-			In the CONFIG dictionnary of the PB_constants.py file, change the value "root" of the variable "user" with your username.
+			In the CONFIG dictionnary of the pb_constants.py file, change the value "root" of the variable "user" with your username.
 
 	6- Run the program:
 		For Windows user, you must initialise your password DB_PWD before to run the program:
@@ -71,10 +71,10 @@ MySQL must be installed, otherwise:
 			
 		After which, you can directly run the program like Linux & MacOS users:	
 		First launch, you must create the Pur Beurre database and load the data OR just update the data of your database if any change occured in the OpenFoodFacts API:
-			> PB_appli.py -uDB
+			> pb_app.py -uDB
 			
 		If you don't want to update the Pur Beurre database and access directly to the interface:
-			> PB_appli.py
+			> pb_app.py
 			
 
 ### Features:
@@ -87,7 +87,7 @@ The program counts 2 classes: Database and InterfaceManager
 	* Create its own database (create_database(), create_table() methods)
 	
 	* Search requests in the OpenFoodFacts API and import data from the OpenFoodFacts API (call_api() method). 
-	In the PB_constants.py file, the CATEGORIES and CHOSEN_FIELDS lists can be changed. CHOSEN_FIELDS list select some useful fields for each product requested.
+	In the pb_constants.py file, the CATEGORIES and CHOSEN_FIELDS lists can be changed. CHOSEN_FIELDS list select some useful fields for each product requested.
 	For more informations about the API requests: https://documenter.getpostman.com/view/8470508/SVtN3Wzy?version=latest#4a0c27c3-3abc-42c4-bf97-63f4e4108294
 	
 	* Save them in its database or update them (insert_cat(), insert_product() methods)

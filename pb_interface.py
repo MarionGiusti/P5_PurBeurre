@@ -4,8 +4,9 @@ Class InterfaceManager:
 Regroups all methods which allow the user to interact with the PurBeurre interface.
 
 """
+import sys
 import random
-from class_database import *
+from pb_database import Database
 from pb_constants import QUEST, INPUT_OPT, OPT0, OPT1, OPT2, OPT3, NOT_OPT, NOT_INT
 
 
@@ -20,6 +21,7 @@ class InterfaceManager:
         self.rand_cat_opt = 0
         self.rand_prod_opt = 0
         self.id_prod_to_comp = 0
+        self.id_prod_to_save = 0
         self.substitut_opt = 0
 
     def welcome(self):
@@ -44,7 +46,7 @@ class InterfaceManager:
         print("       *                           *")
         print("       *****************************\n")
         print()
-        quit()
+        sys.exit()
 
     def display_menu(self):
         """ Main menu: Display different options for the user and wait for the user input """
@@ -52,7 +54,6 @@ class InterfaceManager:
             try:
                 # Need to reset the value of self.enter_2, otherwise it keeps the old value
                 self.enter_2 = 0
-                # Print options
                 print(QUEST, OPT1, OPT2, OPT3)
                 self.option = int(input(INPUT_OPT))
                 if self.option not in [1, 2, 3]:
@@ -68,7 +69,6 @@ class InterfaceManager:
             try:
                 # Need to reset the value of self.enter_2, otherwise it keeps the old value
                 self.enter_2 = 0
-                # Print options
                 print("\n", QUEST, OPT0, OPT1, OPT2, OPT3)
                 self.option = int(input(INPUT_OPT))
                 if self.option not in [0, 1, 2, 3]:
