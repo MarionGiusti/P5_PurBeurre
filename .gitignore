@@ -1,5 +1,9 @@
 # Ignore virtual env
 P5_PurBeurre\
+Lib/
+Scripts/
+__pycache__/
+pyvenv.cfg
 
 #Ignore file .env
 .env

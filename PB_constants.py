@@ -1,6 +1,10 @@
-import os
+"""
 
-""" Constants of the Database and Constants for the API requests """
+Constants of the Database, Constants for the API requests and Constants for the menu
+
+"""
+
+import os
 
 #------------ Some Categories from OpenFood Facts ------------#
 CATEGORIES = [
@@ -31,7 +35,7 @@ CHOSEN_FIELDS = [
 CONFIG = {
     "host" : "localhost",
     "user" : "root",
-    "passwd" : os.getenv("DB_PWD")    
+    "passwd" : os.getenv("DB_PWD")
 }
 
 #------------ Options interface menu ------------#
@@ -43,5 +47,3 @@ OPT3 = "     3- Quitter PUR BEURRE ?\n"
 INPUT_OPT = " ** Rentrez le numéro de l'option :\n"
 NOT_OPT = " Oups ! Ce choix n'est pas dans les options\n"
 NOT_INT = " Oups !  Ce n'est pas un nombre... Rentrez une option valide !\n"
-
-

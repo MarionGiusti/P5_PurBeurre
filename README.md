@@ -73,7 +73,7 @@ MySQL must be installed, otherwise:
 		First launch, you must create the Pur Beurre database and load the data OR just update the data of your database if any change occured in the OpenFoodFacts API:
 			> PB_appli.py -uDB
 			
-		Do not update the Pur Beurre database:
+		If you don't want to update the Pur Beurre database and access directly to the interface:
 			> PB_appli.py
 			
 
