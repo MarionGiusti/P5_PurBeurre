@@ -1,5 +1,7 @@
 # Ignore virtual env
 pb_env/
 
+__pycache__/
+
 #Ignore file .env
 .env
