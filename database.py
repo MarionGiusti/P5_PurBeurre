@@ -10,7 +10,7 @@ Class Database:
 import mysql.connector
 import requests
 
-from pb_constants import CONFIG, CATEGORIES, CHOSEN_FIELDS
+from constants import CONFIG, CATEGORIES, CHOSEN_FIELDS
 
 
 class Database:
@@ -77,9 +77,6 @@ class Database:
             print(" Catégorie '{}': {} produits importés de l'API Open Food Facts \n" \
                 .format(category, len(products_resu)))
             self.json_cat_prod[category] = products_resu
-        # Can save the data in a json file
-        # with open('json_cat_prod.json','w') as f:
-        #   f.write(json.dumps(self.json_cat_prod, indent=4))
 
     def create_database(self):
         """ Method to create a database if it does not exist """
@@ -91,6 +88,7 @@ class Database:
             print(err)
             self.cnx.rollback()
 
+
     def create_table(self):
         """ Method to create tables in the database """
         try:
@@ -100,7 +98,10 @@ class Database:
                 sql_file = fd.read()
             fd.close()
             # Execute the sql queries from the file
-            self.cursor.execute(sql_file, multi=True)
+            sql_commands = sql_file.split(';')
+            for command in sql_commands:
+                self.cursor.execute(command)
+            # self.cursor.execute(sql_file, multi=True)
             self.cnx.commit()
         except mysql.connector.Error as err:
             print(err)
@@ -108,16 +109,20 @@ class Database:
 
     def insert_cat(self):
         """ Method to insert or update category from JSON data (requested from API) """
-        add_cat = ("INSERT INTO Category (cat_name) VALUES (%s) "
-                   "ON DUPLICATE KEY UPDATE cat_name = %s")
-        category_list = []
-        for cat_al in self.json_cat_prod:
-            data_cat = (cat_al, cat_al)
-            category_list.append(cat_al)
-            self.cursor.execute(add_cat, data_cat)
-        self.cnx.commit()
-        # Save the list of categories
-        self.cat_list = category_list
+        try:
+            add_cat = ("INSERT INTO Category (cat_name) VALUES (%s) "
+                       "ON DUPLICATE KEY UPDATE cat_name = %s")
+            category_list = []
+            for cat_al in self.json_cat_prod:
+                data_cat = (cat_al, cat_al)
+                category_list.append(cat_al)
+                self.cursor.execute(add_cat, data_cat)
+            self.cnx.commit()
+            # Save the list of categories
+            self.cat_list = category_list
+        except mysql.connector.Error as err:
+            print(err)
+            self.cnx.rollback()
 
     def insert_product(self):
         """ Method to insert or update product from each category

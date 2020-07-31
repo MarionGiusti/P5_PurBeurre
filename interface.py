@@ -6,8 +6,8 @@ Regroups all methods which allow the user to interact with the PurBeurre interfa
 """
 import sys
 import random
-from pb_database import Database
-from pb_constants import QUEST, INPUT_OPT, OPT0, OPT1, OPT2, OPT3, NOT_OPT, NOT_INT
+from database import Database
+from constants import QUEST, INPUT_OPT, OPT0, OPT1, OPT2, OPT3, NOT_OPT, NOT_INT
 
 
 class InterfaceManager:

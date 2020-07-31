@@ -12,8 +12,8 @@ table_queries (sql queries to create tables in the database)
 
 """
 import argparse
-from pb_database import Database
-from pb_interface import InterfaceManager
+from database import Database
+from interface import InterfaceManager
 
 
 def main():
