@@ -6,8 +6,8 @@ This application
 
 Script Python
 Files:
-PB_appli.py (main script),
-Class_database.py, Class_interface.py and PB_constants (modules),
+purbeurre_app.py (main script),
+database.py, interface.py and constants (modules),
 table_queries (sql queries to create tables in the database)
 
 """
@@ -23,8 +23,8 @@ def main():
 
         pb_db = Database('PurBeurre_db')
 
-        # The user can choose to run only the PurBeurre application (> PB_appli.py) or
-        # to update the PurBeurre Database before to run the application (> PB_appli.py -uDB)
+        # The user can choose to run only the PurBeurre application (> purbeurre_app.py) or
+        # to update the PurBeurre Database before to run the application (> purbeurre_app.py -uDB)
         parser = argparse.ArgumentParser()
         parser.add_argument(
             "-uDB", "--updateDB", help="Update database with Data from API", action="store_true"

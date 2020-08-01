@@ -94,9 +94,9 @@ class Database:
         try:
             self.cursor.execute("USE " + self.db_name + ";")
             # Read the sql queries to create the tables of the database
-            with open("table_queries.sql", "r") as fd:
-                sql_file = fd.read()
-            fd.close()
+            with open("table_queries.sql", "r") as table_sql:
+                sql_file = table_sql.read()
+            table_sql.close()
             # Execute the sql queries from the file
             sql_commands = sql_file.split(';')
             for command in sql_commands:

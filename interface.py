@@ -12,9 +12,9 @@ from constants import QUEST, INPUT_OPT, OPT0, OPT1, OPT2, OPT3, NOT_OPT, NOT_INT
 
 class InterfaceManager:
     """ Class to manage the interface """
-    def __init__(self, db):
+    def __init__(self, dbase):
         """ Initialisation """
-        self.db = Database(db.db_name)
+        self.dbase = Database(dbase.db_name)
         self.option = 0
         self.enter_1 = 0
         self.enter_2 = 0
@@ -94,16 +94,16 @@ class InterfaceManager:
     def random_cat(self):
         """ Display 3 random categories """
         # Call method get_categories() from the database class
-        self.db.get_categories()
+        self.dbase.get_categories()
         k = 3
         i = 1
         rand_cat_id = []
         # Choose randomly 3 categories from all the categories of the database
-        rand_cat = random.sample(self.db.id_cat_list, k)
+        rand_cat = random.sample(self.dbase.id_cat_list, k)
         while i <= k:
             for idd, cat in rand_cat:
                 print(i, "-", cat)
-                cat_option = [i, idd, cat]
+                cat_option = [i, idd]
                 rand_cat_id.append(cat_option)
                 i += 1
         # Save the indice, id and cat_name of the category chosen by the user.
@@ -116,7 +116,7 @@ class InterfaceManager:
             try:
                 self.enter_1 = int(input(" ** Rentrez le numéro de la catégorie souhaitée : \n "))
                 ind_opt = []
-                for ind, cat_id, cat_name in self.rand_cat_opt:
+                for ind, cat_id in self.rand_cat_opt:
                     ind_opt.append(ind)
                 while self.enter_1 not in ind_opt:
                     print("\n", NOT_OPT)
@@ -129,17 +129,17 @@ class InterfaceManager:
         """ Display 6 random products from the category selected by the users """
         k = 6
         i = 1
-        for ind, cat_id, cat_name in self.rand_cat_opt:
+        for ind, cat_id in self.rand_cat_opt:
             if ind == self.enter_1:
                 # Call method get_prod_from_cat() from the database class
-                self.db.get_prod_from_cat(cat_id)
+                self.dbase.get_prod_from_cat(cat_id)
                 # Select 6 random products and save them in the rand_prod variable
-                rand_prod = random.sample(self.db.prod_from_cat, k)
+                rand_prod = random.sample(self.dbase.prod_from_cat, k)
         rand_prod_id = []
         while i <= k:
             for idd, prod in rand_prod:
                 print(i, "-", prod)
-                prod_option = [i, idd, prod]
+                prod_option = [i, idd]
                 rand_prod_id.append(prod_option)
                 i += 1
         # Save the indice, id and product_name of the product chosen by the user.
@@ -152,7 +152,7 @@ class InterfaceManager:
             try:
                 self.enter_2 = int(input(" ** Rentrez le numéro du produit souhaité : \n "))
                 ind_opt = []
-                for ind, prod_id, prod_name in self.rand_prod_opt:
+                for ind, prod_id in self.rand_prod_opt:
                     ind_opt.append(ind)
                     if self.enter_2 == ind:
                         # Save the id of the product to substitute.
@@ -168,15 +168,15 @@ class InterfaceManager:
     def display_chosen_prod(self):
         """ Display the selected product with some descriptions """
         # Call method get_chosen_prod() from the database class
-        self.db.get_chosen_prod(self.id_prod_to_comp)
+        self.dbase.get_chosen_prod(self.id_prod_to_comp)
         print(
             " ***** Produit à substituer sélectionné :\n "
             " Produit | Marque | Gpe Nova | Nutri-score | Code produit | URL \n"
             )
         print(
-            " ", self.db.prod_attr[0][0], "|", self.db.prod_attr[0][1], "|",
-            self.db.prod_attr[0][4], "|", self.db.prod_attr[0][5], "|",
-            self.db.prod_attr[0][2], "|", self.db.prod_attr[0][3]
+            " ", self.dbase.prod_attr[0][0], "|", self.dbase.prod_attr[0][1], "|",
+            self.dbase.prod_attr[0][4], "|", self.dbase.prod_attr[0][5], "|",
+            self.dbase.prod_attr[0][2], "|", self.dbase.prod_attr[0][3]
             )
 
     def display_substitute(self):
@@ -188,11 +188,11 @@ class InterfaceManager:
             "Code produit OpenFoodFacts | URL | Magasin(s) \n\n"
             )
         # Call method find_substitute() from the database class
-        self.db.find_substitute()
+        self.dbase.find_substitute()
         i = 1
         substitut_id = []
         for idd, prod_name, brand_name, nova_gps, nutri_grades, store_name, \
-        code_prod, url in self.db.subst_attr:
+        code_prod, url in self.dbase.subst_attr:
             print(
                 i, "-", prod_name, " | ", brand_name, " | ", nova_gps, " | ", \
                 nutri_grades, " | ", store_name, " | ", code_prod, "|", url, "\n"
@@ -245,7 +245,7 @@ class InterfaceManager:
                 if enter_4 in ind_opt:
                     # Call method save_fav() from the database class
                     # to save the pair (product / substitute)
-                    self.db.save_fav(self.id_prod_to_comp, self.id_prod_to_save)
+                    self.dbase.save_fav(self.id_prod_to_comp, self.id_prod_to_save)
                 else:
                     print(NOT_OPT)
                     self.save_substitute()
@@ -264,9 +264,9 @@ class InterfaceManager:
             "Code produit OpenFoodFacts | URL | Magasin(s) \n\n"
             )
         #  Call method get_fav() from the database class
-        self.db.get_fav()
+        self.dbase.get_fav()
         for prod_name, brand_prod, nova_prod, nutri_prod, sub_name, brand_sub, \
-        nova_sub, nutri_sub, code_sub, url, store in self.db.fav:
+        nova_sub, nutri_sub, code_sub, url, store in self.dbase.fav:
             print(
                 "* ", prod_name, " | ", brand_prod, " | ", nova_prod, \
             	" | ", nutri_prod, " \n ",
