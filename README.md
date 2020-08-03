@@ -90,18 +90,18 @@ The program counts 2 classes: Database and InterfaceManager
 	In the constants.py file, the CATEGORIES and CHOSEN_FIELDS lists can be changed. CHOSEN_FIELDS list select some useful fields for each product requested.
 	For more informations about the API requests: https://documenter.getpostman.com/view/8470508/SVtN3Wzy?version=latest#4a0c27c3-3abc-42c4-bf97-63f4e4108294
 	
-	* Save them in its database or update them (insert_cat(), insert_product() methods)
+	* Save them in its database or update them (insert_category(), insert_product() methods)
 
 
 ##### Methods to interact with the Pur Beurre database using SQL queries. 
 
 SQL queries are executed in order to:
 	
-	* Get informations about categories, products, substitutes (get_prod_from_cat(cat_id), get_chosen_prod(id_prod_to_comp), get_fav())
+	* Get informations about categories, products, substitutes (get_product_from_category(category_id), get_chosen_product(id_product_to_compare), get_favorite())
 	
 	* Compare them (find_substitute())
 	
-	* Save them (save_fav(id_prod_to_comp, id_prod_to_save))
+	* Save them (save_favorite(id_product_to_compare, id_product_to_save))
 
 
 Object of the Database class is an attribute of the InterfaceManager class. In this way, methods to interact with the database can be directly execute in methods from 
@@ -129,13 +129,13 @@ The program interacts with the user by proposing different options (display_menu
 	
 ##### When the user selects the option 1:
 
-	* The program displays random categories from the Pur Beurre database (using method random_cat() from InterfaceManager class)
+	* The program displays random categories from the Pur Beurre database (using method random_category() from InterfaceManager class)
 	
 	* The user chooses one of those categories by entering the corresponding number (variable enter_1)
 	
 	* The program checks that the user input is correct (using method verif_input1() from InterfaceManager class)
 	
-	* The program displays random products from the selected category (using method random_prod(enter_1) from InterfaceManager class)
+	* The program displays random products from the selected category (using method random_product(enter_1) from InterfaceManager class)
 	
 	* The user chooses one of those products by entering the corresponding number (variable enter_2)
 	
@@ -154,6 +154,6 @@ The program interacts with the user by proposing different options (display_menu
 
 ##### When the user selects the option 2:
 
-	* The program displays the list of the product/substitute saved by the user (display_fav() from InterfaceManager class)
+	* The program displays the list of the product/substitute saved by the user (display_favorite() from InterfaceManager class)
 	
 	* Then the program displays the different options (display_options() from InterfaceManager class)

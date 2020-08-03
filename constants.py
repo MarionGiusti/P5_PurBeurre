@@ -6,7 +6,7 @@ Constants of the Database, Constants for the API requests and Constants for the 
 
 import os
 
-#------------ Some Categories from OpenFood Facts ------------#
+# ------------ Some Categories from OpenFood Facts ------------ #
 CATEGORIES = [
     "Boissons",
     "Viandes",
@@ -17,7 +17,7 @@ CATEGORIES = [
     "Produits de la mer"
     ]
 
-#------------ Some useful fields required for each product requested ------------#
+# ------------ Some useful fields required for each product requested ------------ #
 CHOSEN_FIELDS = [
     "product_name_fr",
     "generic_name_fr",
@@ -31,14 +31,22 @@ CHOSEN_FIELDS = [
     "stores"
     ]
 
-#------------ Configuration Database ------------#
+# ------------ Configuration Database ------------ #
 CONFIG = {
     "host" : "localhost",
     "user" : "root",
     "passwd" : os.getenv("DB_PWD")
 }
 
-#------------ Options interface menu ------------#
+# ------------ Options interface menu ------------ #
+STARS_LINE = "\n*****************************************************\n"
+STARS_UP = "\n" \
+           "       *****************************\n" \
+           "       *                           *"
+STARS_DOWN = "       *                           *\n" \
+             "       *****************************\n"
+STARS_LINE2 = "\n******************************************************" \
+              "****************************************\n"
 QUEST = " ***** Souhaitez-vous :\n"
 OPT0 = "     0- Retourner au menu ?\n"
 OPT1 = "     1- Remplacer un aliment ?\n"

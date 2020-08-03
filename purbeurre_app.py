@@ -14,7 +14,7 @@ table_queries (sql queries to create tables in the database)
 import argparse
 from database import Database
 from interface import InterfaceManager
-
+from constants import STARS_LINE2
 
 def main():
     """ Run PurBeurre application """
@@ -38,7 +38,7 @@ def main():
             pb_db.call_api()
             pb_db.create_database()
             pb_db.create_table()
-            pb_db.insert_cat()
+            pb_db.insert_category()
             pb_db.insert_product()
 
         else:
@@ -57,41 +57,32 @@ def main():
                 # Option 1: Allow to research a substitute
                 # by choosing a random product in a random category
                 print("\n ***** Sélectionnez une catégorie :\n ")
-                pb_menu.random_cat()
+                pb_menu.random_category()
                 print()
                 pb_menu.verif_input1()
+                
                 print("\n ***** Sélectionnez un aliment :\n ")
-                pb_menu.random_prod(pb_menu.enter_1)
+                pb_menu.random_product(pb_menu.enter_1)
                 print()
                 pb_menu.verif_input2()
-                print(
-                    "\n******************************************************"
-                    "****************************************\n"
-                    )
-                pb_menu.display_chosen_prod()
-                print(
-                    "\n******************************************************"
-                    "****************************************\n"
-                    )
+                print(STARS_LINE2)
+
+                pb_menu.display_chosen_product()
+                print(STARS_LINE2)
+
                 pb_menu.display_substitute()
                 pb_menu.display_ask_save()
                 pb_menu.display_all_options()
-                print(
-                    "\n******************************************************"
-                    "****************************************\n"
-                    )
+                print(STARS_LINE2)
+
             if pb_menu.option == 2:
                 # Option 2: Access to the favorite table
-                print(
-                    "\n******************************************************"
-                    "****************************************\n"
-                    )
-                pb_menu.display_fav()
+                print(STARS_LINE2)
+
+                pb_menu.display_favorite()
                 pb_menu.display_options()
-                print(
-                    "\n******************************************************"
-                    "****************************************\n"
-                    )
+                print(STARS_LINE2)
+
             if pb_menu.option == 3:
                 # Option3: Quit the PurBeurre application
                 pb_menu.goodbye()

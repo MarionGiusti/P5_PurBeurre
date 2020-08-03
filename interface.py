@@ -7,7 +7,8 @@ Regroups all methods which allow the user to interact with the PurBeurre interfa
 import sys
 import random
 from database import Database
-from constants import QUEST, INPUT_OPT, OPT0, OPT1, OPT2, OPT3, NOT_OPT, NOT_INT
+from constants import STARS_LINE, STARS_UP, STARS_DOWN, \
+QUEST, INPUT_OPT, OPT0, OPT1, OPT2, OPT3, NOT_OPT, NOT_INT
 
 
 class InterfaceManager:
@@ -18,34 +19,23 @@ class InterfaceManager:
         self.option = 0
         self.enter_1 = 0
         self.enter_2 = 0
-        self.rand_cat_opt = 0
-        self.rand_prod_opt = 0
-        self.id_prod_to_comp = 0
-        self.id_prod_to_save = 0
-        self.substitut_opt = 0
+        self.rand_categories_opt = []
+        self.rand_products_opt = []
+        self.id_product_to_compare = 0
+        self.id_product_to_save = 0
+        self.substitute_opt = 0
 
     def welcome(self):
         """ Welcoming message when opening PurBeurre application """
-        print()
-        print("       *****************************")
-        print("       *                           *")
+        print(STARS_UP)
         print("       * BIENVENUE SUR PURBEURRE ! *")
-        print("       *                           *")
-        print("       *****************************\n")
-        print()
-        print("*****************************************************\n")
+        print(STARS_DOWN, STARS_LINE)
 
     def goodbye(self):
         """ Goodbye message when closing the PurBeurre application """
-        print()
-        print("*****************************************************\n")
-        print()
-        print("       *****************************")
-        print("       *                           *")
+        print(STARS_LINE, STARS_UP)
         print("       * A BIENTOT SUR PURBEURRE ! *")
-        print("       *                           *")
-        print("       *****************************\n")
-        print()
+        print(STARS_DOWN)
         sys.exit()
 
     def display_menu(self):
@@ -91,24 +81,23 @@ class InterfaceManager:
             except ValueError:
                 print(NOT_INT)
 
-    def random_cat(self):
+    def random_category(self):
         """ Display 3 random categories """
         # Call method get_categories() from the database class
-        self.dbase.get_categories()
+        self.dbase.get_category()
         k = 3
         i = 1
-        rand_cat_id = []
+        self.rand_categories_opt = []
         # Choose randomly 3 categories from all the categories of the database
-        rand_cat = random.sample(self.dbase.id_cat_list, k)
+        rand_categories = random.sample(self.dbase.id_category_list, k)
         while i <= k:
-            for idd, cat in rand_cat:
-                print(i, "-", cat)
-                cat_option = [i, idd]
-                rand_cat_id.append(cat_option)
+            for category_id, category in rand_categories:
+                print(i, "-", category)
+                category_option = [i, category_id]
+                # Save the indice, id and cat_name of the category chosen by the user.
+                # Useful for methods verif_input1() and random_prod()
+                self.rand_categories_opt.append(category_option)
                 i += 1
-        # Save the indice, id and cat_name of the category chosen by the user.
-        # Useful for methods verif_input1() and random_prod()
-        self.rand_cat_opt = rand_cat_id
 
     def verif_input1(self):
         """ Verification of the user input, self.enter_1 must be in the proposed categories """
@@ -116,7 +105,7 @@ class InterfaceManager:
             try:
                 self.enter_1 = int(input(" ** Rentrez le numéro de la catégorie souhaitée : \n "))
                 ind_opt = []
-                for ind, cat_id in self.rand_cat_opt:
+                for ind, category_id in self.rand_categories_opt:
                     ind_opt.append(ind)
                 while self.enter_1 not in ind_opt:
                     print("\n", NOT_OPT)
@@ -125,26 +114,25 @@ class InterfaceManager:
             except ValueError:
                 print(NOT_INT)
 
-    def random_prod(self, enter_1):
+    def random_product(self, enter_1):
         """ Display 6 random products from the category selected by the users """
         k = 6
         i = 1
-        for ind, cat_id in self.rand_cat_opt:
+        for ind, category_id in self.rand_categories_opt:
             if ind == self.enter_1:
                 # Call method get_prod_from_cat() from the database class
-                self.dbase.get_prod_from_cat(cat_id)
+                self.dbase.get_product_from_category(category_id)
                 # Select 6 random products and save them in the rand_prod variable
-                rand_prod = random.sample(self.dbase.prod_from_cat, k)
-        rand_prod_id = []
+                rand_product = random.sample(self.dbase.product_from_category, k)
+        self.rand_products_opt = []
         while i <= k:
-            for idd, prod in rand_prod:
-                print(i, "-", prod)
-                prod_option = [i, idd]
-                rand_prod_id.append(prod_option)
+            for id_product, product in rand_product:
+                print(i, "-", product)
+                product_option = [i, id_product]
+                # Save the indice, id and product_name of the product chosen by the user.
+                # Useful for methods verif_input2()
+                self.rand_products_opt.append(product_option)
                 i += 1
-        # Save the indice, id and product_name of the product chosen by the user.
-        # Useful for methods verif_input2()
-        self.rand_prod_opt = rand_prod_id
 
     def verif_input2(self):
         """ Verification of the user input, self.enter_2 must be in the proposed products """
@@ -152,12 +140,12 @@ class InterfaceManager:
             try:
                 self.enter_2 = int(input(" ** Rentrez le numéro du produit souhaité : \n "))
                 ind_opt = []
-                for ind, prod_id in self.rand_prod_opt:
+                for ind, product_id in self.rand_products_opt:
                     ind_opt.append(ind)
                     if self.enter_2 == ind:
                         # Save the id of the product to substitute.
                         # Useful in the method display_chosen_prod() and save_substitute()
-                        self.id_prod_to_comp = prod_id
+                        self.id_product_to_compare = product_id
                 while self.enter_2 not in ind_opt:
                     print("\n", NOT_OPT)
                     self.verif_input2()
@@ -165,54 +153,59 @@ class InterfaceManager:
             except ValueError:
                 print(NOT_INT)
 
-    def display_chosen_prod(self):
+    def display_chosen_product(self):
         """ Display the selected product with some descriptions """
         # Call method get_chosen_prod() from the database class
-        self.dbase.get_chosen_prod(self.id_prod_to_comp)
+        self.dbase.get_chosen_product(self.id_product_to_compare)
         print(
-            " ***** Produit à substituer sélectionné :\n "
-            " Produit | Marque | Gpe Nova | Nutri-score | Code produit | URL \n"
+            " ***** Produit à substituer sélectionné :"
             )
         print(
-            " ", self.dbase.prod_attr[0][0], "|", self.dbase.prod_attr[0][1], "|",
-            self.dbase.prod_attr[0][4], "|", self.dbase.prod_attr[0][5], "|",
-            self.dbase.prod_attr[0][2], "|", self.dbase.prod_attr[0][3]
+            "\n Nom :", self.dbase.product_attributs[0][0],
+            "\n Marque :", self.dbase.product_attributs[0][1],
+            "\n Groupe NOVA :", self.dbase.product_attributs[0][4],
+            "\n Nutri-score :", self.dbase.product_attributs[0][5],
+            "\n Code produit :", self.dbase.product_attributs[0][2],
+            "\n URL :", self.dbase.product_attributs[0][3]
             )
 
     def display_substitute(self):
         """ Display different substitutes on the interface with some descriptions """
         print(
-            " ***** Voici des substituts à l'aliment sélectionné "
-            "(meilleur nutri-score et classification nova) :\n "
-            " Produit | Marque | Gpe Nova | Nutri-score | "
-            "Code produit OpenFoodFacts | URL | Magasin(s) \n\n"
+            " ***** Voici des substituts à l'aliment sélectionné :\n"
             )
         # Call method find_substitute() from the database class
         self.dbase.find_substitute()
         i = 1
-        substitut_id = []
-        for idd, prod_name, brand_name, nova_gps, nutri_grades, store_name, \
-        code_prod, url in self.dbase.subst_attr:
+        self.substitute_opt = []
+        for id_product, prod_name, brand_name, nova_gps, nutri_grades, code_prod, \
+        url, store_name in self.dbase.substitute_attributs:
             print(
-                i, "-", prod_name, " | ", brand_name, " | ", nova_gps, " | ", \
-                nutri_grades, " | ", store_name, " | ", code_prod, "|", url, "\n"
+                i, "-",
+                "\n Nom :", prod_name,
+                "\n Marque :", brand_name,
+                "\n Groupe NOVA :", nova_gps,
+                "\n Nutri-score :", nutri_grades,
+                "\n Magasins :", store_name,
+                "\n Code produit :", code_prod,
+                "\n URL :", url,
+                "\n -----"
                 )
-            substitut_option = [i, idd]
-            substitut_id.append(substitut_option)
+            substitute_option = [i, id_product]
+            # Save the id of the chosen substitute.
+            # Useful in the methods display_ask_save() and save_substitute()
+            self.substitute_opt.append(substitute_option)
             i += 1
-        if len(substitut_id) == 0:
+        if len(self.substitute_opt) == 0:
             print(
                 " Excusez-nous, nous n'avons pas trouvé de substituts"
                 " pour ce produit !\n "
                 )
-        # Save the id of the chosen substitute.
-        # Useful in the methods display_ask_save() and save_substitute()
-        self.substitut_opt = substitut_id
 
     def display_ask_save(self):
         """ Option to save (or not save) in the favorite table of
         the database, a pair which includes : a product and a substitute """
-        if len(self.substitut_opt) != 0:
+        if len(self.substitute_opt) != 0:
             print(" Souhaitez-vous enregistrer un substitut ? ")
             enter_3 = input(" o : oui / n : Non \n")
             if enter_3 == "o":
@@ -238,14 +231,14 @@ class InterfaceManager:
                     " enregistrer dans vos favoris : \n "
                     ))
                 ind_opt = []
-                for ind, prod_id in self.substitut_opt:
+                for ind, product_id in self.substitute_opt:
                     ind_opt.append(ind)
                     if enter_4 == ind:
-                        self.id_prod_to_save = prod_id
+                        self.id_product_to_save = product_id
                 if enter_4 in ind_opt:
                     # Call method save_fav() from the database class
                     # to save the pair (product / substitute)
-                    self.dbase.save_fav(self.id_prod_to_comp, self.id_prod_to_save)
+                    self.dbase.save_favorite(self.id_product_to_compare, self.id_product_to_save)
                 else:
                     print(NOT_OPT)
                     self.save_substitute()
@@ -254,22 +247,26 @@ class InterfaceManager:
             except ValueError:
                 print(NOT_INT)
 
-    def display_fav(self):
+    def display_favorite(self):
         """ Display on the interface some attributes of the product and its substitute """
         print(
-            " Liste de vos favoris (chaque ligne = un aliment associé "
-            "à un de ses substitut) :\n "
-            " * Produit initiale | Marque | Gpe Nova | Nutri-score | \n"
-            " Substitut | Marque | Gpe Nova | Nutri-score | "
-            "Code produit OpenFoodFacts | URL | Magasin(s) \n\n"
+            " Liste de vos favoris :\n"
             )
-        #  Call method get_fav() from the database class
-        self.dbase.get_fav()
+        # Call method get_fav() from the database class
+        self.dbase.get_favorite()
         for prod_name, brand_prod, nova_prod, nutri_prod, sub_name, brand_sub, \
-        nova_sub, nutri_sub, code_sub, url, store in self.dbase.fav:
+        nova_sub, nutri_sub, code_sub, url, store in self.dbase.favorite:
             print(
-                "* ", prod_name, " | ", brand_prod, " | ", nova_prod, \
-            	" | ", nutri_prod, " \n ",
-                sub_name, " | ", brand_sub, " | ", nova_sub, " | ", \
-                nutri_sub, " | ", code_sub, "|", url, " | ", store, "\n"
+                "* Produit à substituer:", prod_name,
+                "\n Marque :", brand_prod,
+                "\n Groupe NOVA :", nova_prod,
+                "\n Nutri-score ", nutri_prod, " \n",
+                "* Substitut :", sub_name,
+                "\n Marque :", brand_sub,
+                "\n Groupe NOVA :", nova_sub,
+                "\n Nutri-score :", nutri_sub,
+                "\n Code produit :", code_sub,
+                "\n URL :", url,
+                "\n Magasins :", store,
+                "\n -----\n"
                 )
